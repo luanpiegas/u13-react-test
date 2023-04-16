@@ -6,9 +6,10 @@ interface LatLng {
 }
 
 interface WeatherForecast {
+    icon: string | undefined;
     name: string;
     temperature: number;
-    detailedForecast: string;
+    shortForecast: string;
     startTime: string;
     endTime: string;
 }
@@ -76,13 +77,12 @@ function WeatherForecastApi(): JSX.Element {
     return (
         <div className='p-5'>
             <form onSubmit={handleFormSubmit}>
-                <h1 className='font-bold from-neutral-800 text-2xl my-5'>Get the forecast for a specific US address</h1>
                 <label htmlFor='address'>
                     Address:
                 </label>
-                <div className='flex flex-shrink'>
-                    <input id='address' type="text" className='border-2 rounded-md border-slate-400 mb-2 p-2 w-full h-12' placeholder='Number, Street and City' value={address} onChange={(e) => setAddress(e.target.value)} />
-                    <button type="submit" className='bg-black rounded-md text-white font-bold w-full max-w-xs h-12'>Get forecast</button>
+                <div className='flex flex-shrink gap-2'>
+                    <input id='address' type="text" className='border-2 rounded-md border-blue-200 mb-2 p-2 w-full h-12' placeholder='Number, Street and City' value={address} onChange={(e) => setAddress(e.target.value)} />
+                    <button type="submit" className='bg-blue-600 rounded-md text-white font-bold w-full max-w-[130px] h-12 hover:bg-blue-700'>Get forecast</button>
                 </div>
             </form>
             {error && <p>{error}</p>}
@@ -94,12 +94,12 @@ function WeatherForecastApi(): JSX.Element {
                     </div>
                     {forecast.length > 0 ? (
                         <div>
-                            <div className='flex flex-wrap justify-start box-border'>
+                            <div className='flex flex-wrap justify-center justify-items-start'>
                                 {forecast.map((period) => (
-                                    <div className='rounded-xl shadow-md p-4 w-1/3' key={period.startTime}>
-                                        <div className='text-slate-500'>{new Date(period.startTime).toDateString()}</div>
-                                        <div className='font-bold text-3xl text-slate-800'>{`${period.temperature} °F`}</div>
-                                        <div className='text-sm'>{period.detailedForecast}</div>
+                                    <div className='box-border rounded-xl shadow-md hover:shadow-lg p-4 w-full max-w-sm' key={period.startTime}>
+                                        <div className='text-slate-400 text-sm'>{new Date(period.startTime).toDateString()}</div>
+                                        <div className='font-bold text-3xl text-blue-600'>{`${period.temperature} °F`}</div>
+                                        <div className='text-sm'>{period.shortForecast}</div>
                                     </div>
                                 ))}
                             </div>
